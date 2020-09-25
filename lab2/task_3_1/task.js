@@ -4,6 +4,7 @@
 // Необходимо создать массив и сохранять в него строки только с четной длинной. 
 // Получившийся массив необходимо преобразовать в строку JSON и сохранить в файл.
 
+
 const readlineSync = require('readline-sync');
 const fs = require("fs");
 const nameString = "test.txt";
