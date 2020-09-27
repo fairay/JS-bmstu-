@@ -6,6 +6,7 @@
 // Необходимо вывести на экран ветку с максимальной вложенностью.
 
 const fs = require("fs");
+const { abort } = require("process");
 const f_name = "json-data.txt";
 
 function create_file() {
@@ -13,8 +14,8 @@ function create_file() {
     class Box {
         constructor (depth) {
             this.d = depth;
-            this.leaf1 = NaN;
-            this.leaf2 = NaN;
+            this.leaf1 = null;
+            this.leaf2 = null;
             if (Math.random() > 1 - probability)
                 this.leaf1 = new Box(depth+1);
             if (Math.random() > 1 - probability)

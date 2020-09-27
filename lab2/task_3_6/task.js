@@ -11,7 +11,7 @@ class Box {
         if (depth > 0)
             this.next = new Box(depth-1);
         else
-            this.next = NaN;
+            this.next = null;
     }
 }
 
