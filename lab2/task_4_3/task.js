@@ -65,3 +65,7 @@ const field_arr = readlineSync.question("Input fields (separated with ,): ").spl
 
 generate_html(req_addr, field_arr);
 show_html();
+
+// В чём различие между многпоточностью и асинхронностью
+// Что эффективнее многпоточность или асинхронность?
+

@@ -21,7 +21,7 @@ let step = 128;
 while (step > 1) {
     try {
         let b = new Box(size);
-        let jsonStr = JSON.stringify(b);
+        // let jsonStr = JSON.stringify(b);
         size += step;
     } catch (RangeError) {
         size -= step;
