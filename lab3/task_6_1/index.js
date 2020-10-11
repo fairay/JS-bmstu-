@@ -1,6 +1,6 @@
 "use strict";
 
-const gameArr = [];
+let gameArr = [];
 function addGame(name_, desr_, limit_) {
     if (limit_ < 0)
         return;
@@ -53,8 +53,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-// выдача страницы с массивом учеников
 app.get("/show_games", function(request, response) {
     const age = request.query.age;
     let info = {
