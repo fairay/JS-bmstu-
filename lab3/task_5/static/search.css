@@ -1,13 +1,13 @@
 body {
-    padding: 30px;
-    background: burlywood;
+    margin-inline-end: auto;
+    background: rgb(237, 238, 240);
     font-family: Geneva, Arial, Helvetica, sans-serif;
 }
 
 .btn-class {
     padding: 6px;
-    background: blueviolet;
+    background: rgb(74, 118, 168);
     color: white;
-    cursor: pointer;
+    cursor: help;
     display: inline-block;
 }

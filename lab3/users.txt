@@ -1,1 +1,0 @@
-[{"email":"5","surname":"412","phone":"3"},{"email":"12341","surname":"213","phone":"122"},{"email":"@11","surname":"213","phone":"+7-912"},{"email":"my_mail@bmstu.ru","surname":"Жмышенко","phone":"8-900-666-14-99"}]

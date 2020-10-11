@@ -15,12 +15,17 @@ function ajaxGet(urlString, callback) {
     };
 };
 
+function shut_down() {
+    ajaxGet(`/shut_down`, function(stringAnswer) {
+        alert(stringAnswer);
+    })
+};
+
 window.onload = function() {
     // input fields
     const f_email = document.getElementById("field-email");
     // button
     const btn = document.getElementById("send-btn");
-    const shut_down_btn = document.getElementById("shut_down-btn");
     // Output fields
     const out_email = document.getElementById("result-email");
     const out_surname = document.getElementById("result-surname");
@@ -52,11 +57,5 @@ window.onload = function() {
                 alert(`Пользователь с почтой ${email} не найден`);
             }
         });
-    };
-
-    shut_down_btn.onclick = function() {
-        ajaxGet(`/shut_down`, function(stringAnswer) {
-            alert(stringAnswer);
-        })
     };
 };

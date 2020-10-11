@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Подборка игр</title>
+</head>
+<body>
+    
+<h2>
+    Список игр для возраста <i>{{ageValue}}</i>:
+</h2>
+
+{{#each gameArr}}
+    <div style="background: rgb(232, 240, 254); margin-bottom: 10px; padding: 5px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+        <h3>{{this.name}} (<i>{{this.age_limit}}+</i>)</h3>
+        <div style="background: rgb(134, 188, 238); margin-bottom: 3px; padding: 7px; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+            Описание: {{this.description}} 
+        </div>
+    </div>
+{{/each}}
+
+</body>
+</html>
