@@ -6,7 +6,7 @@ const fs = require("fs");
 const app = express();
 const port = 5003;
 app.listen(port);
-console.log("Server on port " + port);
+console.log("Car server on port " + port);
 
 const file_name = "A.txt";
 
@@ -83,12 +83,18 @@ app.post("/select/record", function(request, response) {
     loadBody(request, function(body) {
         const car_name = JSON.parse(body);
 
-        const file_str = fs.readFileSync(file_name, "utf-8");
-        const file_arr = JSON.parse(file_str);
-        let car = find_car(car_name);
+        const file_arr = get_file_arr(file_name);
+        let car = find_car(file_arr, car_name);
         if (car === null)
             response.end();
         else
             response.end(JSON.stringify(car));
+    });
+});
+
+app.post("/select/all", function(request, response) {
+    loadBody(request, function(body) {
+        const file_arr = get_file_arr(file_name);
+        response.end(JSON.stringify(file_arr));
     });
 });

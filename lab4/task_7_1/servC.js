@@ -6,7 +6,7 @@ const request = require("request");
 const app = express();
 const port = 5000;
 app.listen(port);
-console.log(`Server on port ${port}`);
+console.log(`Web-interface server on port ${port}`);
 
 const way = __dirname + "/static";
 app.use(express.static(way));
@@ -40,18 +40,6 @@ function sendPost(url, body, callback) {
     });
 }
 
-app.get("/insert/storage", function(request, response) {
-    // const a = request.query.a;
-    // const b = request.query.b;
-    // sendPost(storage_addr + "/insert/record", JSON.stringify({
-    //     x: a,
-    //     y: b
-    // }), function(answerString) {
-    //     const answerObject = JSON.parse(answerString);
-    //     const answer = answerObject.answer;
-    //     response.end("Answer: " + answer);
-    // });
-});
 
 app.get("/insert/car", function(request, response) {
     const name_ = request.query.name;
@@ -60,9 +48,33 @@ app.get("/insert/car", function(request, response) {
         name: name_,
         cost: cost_
     }), function(answerString) {
-        // const answerObject = JSON.parse(answerString);
-        // const answer = answerObject.answer;
         response.end("Result: " + answerString);
+    });
+});
+
+app.get("/insert/storage", function(request, response) {
+    const name_ = request.query.name;
+    const car_arr_ = request.query.car_arr;
+    sendPost(storage_addr + "/insert/record", JSON.stringify({
+        name: name_,
+        car_arr: car_arr_
+    }), function(answerString) {
+        response.end("Result: " + answerString);
+    });
+});
+
+app.get("/select/car", function(request, response) {
+    const name_ = request.query.name;
+    sendPost(car_addr + "/select/record", JSON.stringify(name_), function(answerString) {
+        response.end(answerString);
+    });
+});
+
+
+app.get("/select/storage", function(request, response) {
+    const name_ = request.query.name;
+    sendPost(storage_addr + "/select/record", JSON.stringify(name_), function(answerString) {
+        response.end(answerString);
     });
 });
 
@@ -70,4 +82,17 @@ app.get("/insert/car", function(request, response) {
 // Jump to other pages
 app.get("/show/insert/car", function(request, response) {
     response.render("in_car.hbs", null);
+});
+app.get("/show/select/car", function(request, response) {
+    response.render("out_car.hbs", null);
+});
+
+app.get("/show/insert/storage", function(request, response) {
+    sendPost(car_addr + "/select/all", "", function(answerString) {
+        let obj = { car_arr: JSON.parse(answerString)}
+        response.render("in_storage.hbs", obj);
+    });    
+});
+app.get("/show/select/storage", function(request, response) {
+    response.render("out_storage.hbs", null);
 });

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Моя страница</title>
+</head>
+<body>
+    <form action="/insert/storage">
+        <p>Название склада:</p>
+        <input name="name" type="text">
+
+        <p>Хранимые машины:</p>
+{{#each car_arr}}
+        <p><input type="checkbox" name="car_arr" value={{this.name}}>{{this.name}}</p>
+{{/each}}
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+</body>
+</html>

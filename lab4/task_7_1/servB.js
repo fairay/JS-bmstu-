@@ -6,7 +6,7 @@ const fs = require("fs");
 const app = express();
 const port = 5002;
 app.listen(port);
-console.log("Server on port " + port);
+console.log("Storage server on port " + port);
 
 const file_name = "B.txt";
 
@@ -16,6 +16,20 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     next();
 });
+
+function get_file_arr(f_name) {
+    let file_arr;
+    if (fs.existsSync(f_name)) {
+        const file_str = fs.readFileSync(f_name, "utf-8");
+        if (file_str == "")
+            file_arr = [];
+        else
+            file_arr = JSON.parse(file_str);
+    } else {
+        file_arr = [];
+    }
+    return file_arr;
+}
 
 function is_valid(storage) {
     if (!storage.name)  return false;
@@ -53,8 +67,7 @@ app.post("/insert/record", function(request, response) {
         let msg = "Storage added";
         const obj = JSON.parse(body);
 
-        const file_str = fs.readFileSync(file_name, "utf-8");
-        let file_arr = JSON.parse(file_str);
+        let file_arr = get_file_arr(file_name);
         if (!is_storage_in(file_arr, obj)) {
             file_arr.push(obj);
             fs.writeFileSync(file_name, JSON.stringify(file_arr));
@@ -71,12 +84,18 @@ app.post("/select/record", function(request, response) {
     loadBody(request, function(body) {
         const storage_name = JSON.parse(body);
 
-        const file_str = fs.readFileSync(file_name, "utf-8");
-        const file_arr = JSON.parse(file_str);
-        let storage = find_storage(storage_name);
+        const file_arr = get_file_arr(file_name);
+        let storage = find_storage(file_arr, storage_name);
         if (storage === null)
             response.end();
         else
             response.end(JSON.stringify(storage));
+    });
+});
+
+app.post("/select/all", function(request, response) {
+    loadBody(request, function(body) {
+        const file_arr = get_file_arr(file_name);
+        response.end(JSON.stringify(file_arr));
     });
 });
