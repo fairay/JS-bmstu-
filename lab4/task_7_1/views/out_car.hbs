@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Машины и склады</title>
+    <link rel="stylesheet" href="/main.css">
 </head>
 <body>
     <h1>Сервис управления складами</h1>
@@ -11,10 +12,10 @@
     <input id="field-name" type="text" spellcheck="false" autocomplete="off">
     <br>
     <br>
-    <input id="send-btn" type="submit" value="Найти">
+    <input id="send-btn" type="submit" value="Найти" class="btn-class">
 
     <br>
-    <h3>Результат поиска:</h3>
+    <h3 id="result-title"></h3>
     <p id="result-name"></p>  
     <p id="result-cost"></p>
 
@@ -37,15 +38,18 @@
             // button
             const btn = document.getElementById("send-btn");
             // Output fields
+            const out_title = document.getElementById("result-title");
             const out_name = document.getElementById("result-name");
             const out_cost = document.getElementById("result-cost");
 
             function show_car(obj) {
+                out_title.innerHTML = 'Результат поиска:';
                 out_name.innerHTML = `Название:  ${obj.name}`;
                 out_cost.innerHTML = `Стоимость: ${obj.cost}`;
             }
 
             function show_void() {
+                out_title.innerHTML = 'Не найдено';
                 out_name.innerHTML = ``;
                 out_cost.innerHTML = ``;
             }
