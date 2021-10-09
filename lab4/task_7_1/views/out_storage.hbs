@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Машины и склады</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <h1>Сервис управления складами</h1>
+    <h3>Поиск склада</h3>
+    <p>Введите название:</p>
+    <input id="field-name" type="text" spellcheck="false" autocomplete="off">
+    <br>
+    <br>
+    <input id="send-btn" type="submit" value="Найти" class="btn-class">
+
+    <br>
+    <h3 id="result-title"></h3>
+    <p id="result-name"></p>  
+    <p id="result-cars"></p>
+
+    <script>
+        "use strict";
+
+        function ajaxGet(urlString, callback) {
+            let r = new XMLHttpRequest();
+            r.open("GET", urlString, true);
+            r.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+            r.send(null);
+            r.onload = function() {
+                callback(r.response);
+            };
+        };
+
+        window.onload = function() {
+            const f_name = document.getElementById("field-name");
+            const btn = document.getElementById("send-btn");
+
+            const out_title = document.getElementById("result-title");
+            const out_name = document.getElementById("result-name");
+            const out_cars = document.getElementById("result-cars");
+
+            function show_car(obj) {
+                out_title.innerHTML = 'Результат поиска:';
+                out_name.innerHTML = `Название:  ${obj.name}`;
+                out_cars.innerHTML = `Машины: `;
+                for (let i=0; i<obj.car_arr.length; i++) {
+                    out_cars.innerHTML = out_cars.innerHTML + `${obj.car_arr[i]}`;
+                    if (i != obj.car_arr.length-1)
+                        out_cars.innerHTML = out_cars.innerHTML + ", ";
+                }
+
+            }
+
+            function show_void() {
+                out_title.innerHTML = 'Не найдено';
+                out_name.innerHTML = ``;
+                out_cost.innerHTML = ``;
+            }
+
+            btn.onclick = function() {
+                const name = f_name.value;
+                const url = `/select/storage?name=${name}`;
+
+                ajaxGet(url, function(stringAnswer) {
+                    console.log(stringAnswer);
+                    if (stringAnswer)
+                    {
+                        const objectAnswer = JSON.parse(stringAnswer);
+                        if (objectAnswer.name != "")
+                            show_car(objectAnswer);
+                        else {
+                            show_void();
+                            alert(`Склад с названием ${name} не найдена`);
+                        }
+                    }
+                    else {
+                        show_void();
+                        alert(`Склад не найден`);
+                    }
+                });
+            };
+        };
+    </script>
+</body>
+</html>
